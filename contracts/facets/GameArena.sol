@@ -24,12 +24,12 @@ contract GameArena {
 //     }
 
   function getRandomNumber() internal returns (uint randNum) {
-       uint mod = 25;
+       uint mod = 18;
        s.omega++;
          randNum = uint(keccak256(abi.encodePacked(block.timestamp, s.omega, msg.sender))) % mod;
   }
   function shuffleCards() public {
-      while (s.cards.length < 24){
+      while (s.cards.length < 18){
         uint _rand = getRandomNumber();
         bool matches = false;
         for(uint i = 0; i < s.cards.length; i++){
