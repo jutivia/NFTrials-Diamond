@@ -7,6 +7,7 @@ export async function shuffleCards() {
     let shuffleCard = (await ethers.getContractAt("GameArena", DIAMOND_ADDRESS)) as GameArena;
     await shuffleCard.shuffleCards()
     const result = await shuffleCard.viewShuffledCards()
+    
     console.log(result);
 }
 if (require.main === module) {

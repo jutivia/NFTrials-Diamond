@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.4;
+
 import {AppStorage} from "../libraries/LibAppStorage.sol";
 import {LibGame} from "../libraries/LibAppGameFunctions.sol";
 contract GameArena {
@@ -7,7 +8,7 @@ contract GameArena {
 
     event ShowShuffledArray (uint256[] array);
     modifier onePlayer {
-      require(block.timeStamp>= s.startTimeStamp, "Game hasn't started");
+      // require(block.timeStamp>= s.startTimeStamp, "Game hasn't started");
       if(block.timestamp >= s.startTimeStamp+ 86400){
       uint256 timeSpace = block.timestamp - s.startTimeStamp;
       while (timeSpace - 86400 >=0){
@@ -53,9 +54,33 @@ contract GameArena {
     function viewShuffledCards() view public returns(uint[] memory) {
         return s.cards;
     }
-
+    event EmitScores(uint indexed scores);
     function checkPlayerScore (uint256[6] memory playerNumbers) onePlayer external{
       s.isPlayerPlayed[msg.sender][s.day] = true;
-      // 3. Check the players numbers vs the correct number 
+      // 3. Check the players numbers vs the correct number
+      uint score;
+      s.playerNum[msg.sender] = playerNumbers;
+      for (uint256 i = 0; i < playerNumbers.length; i++) {
+        if(playerNumbers[i] == 1){
+          score++;
+        }
+        if(playerNumbers[i] == 2){
+          score++;
+        }
+        if(playerNumbers[i] == 3){
+          score++;
+        }
+        if(playerNumbers[i] == 4){
+          score++;
+        }
+        if(playerNumbers[i] == 5){
+          score++;
+        }
+        if(playerNumbers[i] == 6){
+          score++;
+        }
+      }
+      s.playScore[msg.sender] = score;
+      emit EmitScores(score);
     }
 }
