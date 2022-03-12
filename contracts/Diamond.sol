@@ -10,9 +10,6 @@ pragma solidity ^0.8.0;
 
 import { LibDiamond } from "./libraries/LibDiamond.sol";
 import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
-import { IDiamondLoupe } from "./interfaces/IDiamondLoupe.sol";
-import { IERC173 } from "./interfaces/IERC173.sol";
-import { IERC165 } from "./interfaces/IERC165.sol";
 
 contract Diamond {    
 
@@ -35,10 +32,6 @@ contract Diamond {
     // function if a facet is found and return any value.
     fallback() external payable {
         LibDiamond.DiamondStorage storage ds;
-        ds.supportedInterfaces[type(IERC165).interfaceId] = true;
-        ds.supportedInterfaces[type(IDiamondCut).interfaceId] = true;
-        ds.supportedInterfaces[type(IDiamondLoupe).interfaceId] = true;
-        ds.supportedInterfaces[type(IERC173).interfaceId] = true;
         bytes32 position = LibDiamond.DIAMOND_STORAGE_POSITION;
         // get diamond storage
         assembly {
