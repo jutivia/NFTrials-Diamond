@@ -5,14 +5,19 @@ import {AppStorage} from "../libraries/LibAppStorage.sol";
 import {LibGame} from "../libraries/LibAppGameFunctions.sol";
 contract GameArena {
     AppStorage internal s;
-
+    struct player {
+      address playerAddress;
+      uint score;
+    }
 
     event ShowShuffledArray (uint256[] array);
+    event EmitScores(uint indexed scores);
+
     modifier onePlayer {
-      require(block.timestamp>= s.startTimeStamp, "Game hasn't started");
-      if(block.timestamp >= (s.startTimeStamp+ 86400)){
+      require(block.timestamp >= s.startTimeStamp, "Game hasn't started");
+      if(block.timestamp >= (s.startTimeStamp + 86400)){
       uint256 timeSpace = block.timestamp - s.startTimeStamp;
-      while (timeSpace - 86400 >=0){
+      while (timeSpace - 86400 >=0 ){
            timeSpace -=86400;
            s.day++;
          }
@@ -23,7 +28,8 @@ contract GameArena {
     }
 
     function init() external {
-      s.startTimeStamp = 1647212400;
+      s.startTimeStamp = block.timestamp;
+      // s.startTimeStamp = 1647212400;
       s.day = 1;
     }
 
@@ -33,8 +39,15 @@ contract GameArena {
         uint result = uint(keccak256(abi.encodePacked(block.timestamp, s.omega, msg.sender))) % mod;
         randNum = result + 1;
     }
+
+     function clearArray() internal {
+      while(s.cards.length > 0){
+        s.cards.pop();
+      }
+    }
     function shuffleCards() onePlayer public {
-        while (s.cards.length < 18){
+      clearArray();
+      while (s.cards.length < 18){
           uint _rand = getRandomNumber();
           bool matches = false;
           for(uint i = 0; i < s.cards.length; i++){
@@ -50,15 +63,9 @@ contract GameArena {
         }
         emit ShowShuffledArray(s.cards);
     }
-    // function viewShuffledCards() view public returns(uint[] memory) {
-    //     return s.cards;
-    // }
-    event EmitScores(uint indexed scores);
-    function checkPlayerScore (uint256[6] memory playerNumbers) external{
-      s.isPlayerPlayed[msg.sender][s.day] = true;
-      // 3. Check the players numbers vs the correct number
+
+    function checkPlayerScore (uint256[6] memory playerNumbers) onePlayer external{
       uint score;
-      s.playerNum[msg.sender] = playerNumbers;
       for (uint256 i = 0; i < playerNumbers.length; i++) {
         if(playerNumbers[i] == 1){
           score++;
@@ -79,7 +86,9 @@ contract GameArena {
           score++;
         }
       }
-      s.playScore[msg.sender] = score;
+      s.playScore[msg.sender][s.day] = score;
+      s.isPlayerPlayed[msg.sender][s.day] = true;
+      s.allPlayersPerDay[s.day].push(msg.sender);
       emit EmitScores(score);
     }
 }
