@@ -12,6 +12,7 @@ contract GameArena {
 
     event ShowShuffledArray (uint256[] array);
     event EmitScores(uint indexed scores);
+    event leaderBoard(player[] playerScores);
 
     modifier onePlayer {
       require(block.timestamp >= s.startTimeStamp, "Game hasn't started");
@@ -90,5 +91,10 @@ contract GameArena {
       s.isPlayerPlayed[msg.sender][s.day] = true;
       s.allPlayersPerDay[s.day].push(msg.sender);
       emit EmitScores(score);
+    }
+
+    function emitLeaderBoard () {
+
+      emit leaderBoard();
     }
 }
