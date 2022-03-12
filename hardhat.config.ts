@@ -25,6 +25,11 @@ module.exports = {
       timeout: 120000,
       gas: "auto",
     },
+    polygon: {
+      url: process.env.POLYGON_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
     localhost: {
       timeout: 8000000,
     },

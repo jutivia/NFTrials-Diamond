@@ -8,7 +8,7 @@ contract GameArena {
     event ShowShuffledArray (uint256[] array);
     modifier onePlayer {
       require(block.timestamp>= s.startTimeStamp, "Game hasn't started");
-      if(block.timestamp >= s.startTimeStamp+ 86400){
+      if(block.timestamp >= (s.startTimeStamp+ 86400)){
       uint256 timeSpace = block.timestamp - s.startTimeStamp;
       while (timeSpace - 86400 >=0){
            timeSpace -=86400;
@@ -17,8 +17,6 @@ contract GameArena {
       }
       require(!s.isPlayerPlayed[msg.sender][s.day], "Player has played for the day");
       require (msg.sender == tx.origin, "Player has been registered for the day");
-      //  if(block.timestamp>= (s.startTimeStamp + (s.day *84600))) {
-      //  }
      _;
     }
 
@@ -26,11 +24,6 @@ contract GameArena {
       s.startTimeStamp = 1647212400;
       s.day = 1;
     }
-    // function getRandomNumber() internal returns (uint randNum) {
-    //     uint mod = 19;
-    //     s.omega++;
-    //    randNum = uint(keccak256(abi.encodePacked(block.timestamp, s.omega, msg.sender))) % mod;
-    // }
 
     function getRandomNumber() internal returns (uint randNum) {
         uint mod = 18;
