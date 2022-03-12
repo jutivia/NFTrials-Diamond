@@ -1,4 +1,7 @@
-# Diamond-3-Hardhat Implementation + Typechain Support
+# NFTrials
+## A decentralized application built on the polygon blockchain using the Diamond-3-Hardhat Implementation Standard (ERC2535) and Typechain support
+
+### Diamond-3-Hardhat Implementation + Typechain Support
 
 This is a simple example implementation for [EIP-2535 Diamond Standard](https://github.com/ethereum/EIPs/issues/2535). To learn about other implementations go here: https://github.com/mudgen/diamond
 
