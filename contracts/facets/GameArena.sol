@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.4;
+pragma solidity ^0.8.4;
 
 import {AppStorage} from "../libraries/LibAppStorage.sol";
 import {LibGame} from "../libraries/LibAppGameFunctions.sol";
 contract GameArena {
     AppStorage internal s;
 
+
     event ShowShuffledArray (uint256[] array);
     modifier onePlayer {
-      // require(block.timeStamp>= s.startTimeStamp, "Game hasn't started");
+      require(block.timestamp>= s.startTimeStamp, "Game hasn't started");
       if(block.timestamp >= s.startTimeStamp+ 86400){
       uint256 timeSpace = block.timestamp - s.startTimeStamp;
       while (timeSpace - 86400 >=0){
@@ -27,12 +28,17 @@ contract GameArena {
       s.startTimeStamp = 1647212400;
       s.day = 1;
     }
-    function getRandomNumber() internal onePlayer returns (uint randNum) {
+    // function getRandomNumber() internal returns (uint randNum) {
+    //     uint mod = 19;
+    //     s.omega++;
+    //    randNum = uint(keccak256(abi.encodePacked(block.timestamp, s.omega, msg.sender))) % mod;
+    // }
+
+    function getRandomNumber() internal returns (uint randNum) {
         uint mod = 18;
-        s.omega += 1;
+        s.omega++;
         uint result = uint(keccak256(abi.encodePacked(block.timestamp, s.omega, msg.sender))) % mod;
         randNum = result + 1;
-
     }
     function shuffleCards() onePlayer public {
         while (s.cards.length < 18){
@@ -51,11 +57,11 @@ contract GameArena {
         }
         emit ShowShuffledArray(s.cards);
     }
-    function viewShuffledCards() view public returns(uint[] memory) {
-        return s.cards;
-    }
+    // function viewShuffledCards() view public returns(uint[] memory) {
+    //     return s.cards;
+    // }
     event EmitScores(uint indexed scores);
-    function checkPlayerScore (uint256[6] memory playerNumbers) onePlayer external{
+    function checkPlayerScore (uint256[6] memory playerNumbers) external{
       s.isPlayerPlayed[msg.sender][s.day] = true;
       // 3. Check the players numbers vs the correct number
       uint score;
