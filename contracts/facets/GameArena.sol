@@ -4,6 +4,7 @@ import {AppStorage} from "../libraries/LibAppStorage.sol";
 
 contract GameArena {
     AppStorage internal s;
+    event ShowShuffledArray (uint256[] array);
 //     function randomNumber () internal returns(uint){
 //       uint mod = 23;
 //       s.omega ++;
@@ -43,8 +44,13 @@ contract GameArena {
           s.cards[s.cards.length-1] = _rand;
         }
       }
+      emit ShowShuffledArray(s.cards);
   }
   function viewShuffledCards() view public returns(uint[] memory) {
       return s.cards;
+  }
+
+  function checkPlayerScore (uint256[6] playerNumbers) external{
+    // 3. Check the players numbers vs the correct number 
   }
 }
