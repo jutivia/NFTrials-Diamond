@@ -9,4 +9,7 @@ struct AppStorage {
     uint256[] cards;
     uint256 startTimeStamp;
     uint256 day;
+    uint8 interval;
+    mapping(address => uint[6]) playerNum;
+    mapping (address => uint) playScore;
 } 
