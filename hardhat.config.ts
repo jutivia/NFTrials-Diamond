@@ -26,7 +26,7 @@ module.exports = {
       gas: "auto",
     },
     polygon: {
-      url: process.env.POLYGON_URL || "",
+      url: 'https://speedy-nodes-nyc.moralis.io/929155a11ae2912742ddd55e/polygon/mumbai' || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
         blockGasLimit: 200000000000,
