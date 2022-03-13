@@ -3,7 +3,7 @@ import { GameArena } from "../typechain-types";
 const DIAMOND_ADDRESS = "0x4c5859f0F772848b2D91F1D83E2Fe57935348029"
 // const GAME_ARENA= "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
 
-export async function shuffleCards() {
+export async function MainGame() {
   let shuffleCard = (await ethers.getContractAt("GameArena", DIAMOND_ADDRESS)) as GameArena;
   await shuffleCard.init()
   const receipt = await shuffleCard.shuffleCards()
@@ -15,7 +15,7 @@ export async function shuffleCards() {
   // console.log(await receipt.wait());
 }
 if (require.main === module) {
-  shuffleCards()
+  MainGame()
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);
@@ -23,5 +23,5 @@ if (require.main === module) {
     });
 }
 
-exports.shuffleCards = shuffleCards;
+exports.shuffleCards = MainGame;
 

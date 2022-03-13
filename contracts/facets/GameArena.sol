@@ -11,6 +11,7 @@ contract GameArena {
 
     event ShowShuffledArray (uint256[] array);
     event EmitScores(uint indexed scores);
+    event leaderBoard(player[] playerScores);
 
     modifier onePlayer {
       require(block.timestamp >= s.startTimeStamp, "Game hasn't started");
@@ -27,8 +28,8 @@ contract GameArena {
     }
 
     function init() external {
-      s.startTimeStamp = block.timestamp;
-      // s.startTimeStamp = 1647212400;
+      // s.startTimeStamp = block.timestamp;
+      s.startTimeStamp = 	1647126000;
       s.day = 1;
     }
 
@@ -90,19 +91,15 @@ contract GameArena {
       s.allPlayersPerDay[s.day].push(msg.sender);
       emit EmitScores(score);
     }
-
-    function leaderBoard()external view returns(player[] memory x){
-    //   struct player {
-    //   address playerAddress;
-    //   uint score;
-    // }
-    x =new player[](s.allPlayersPerDay[s.day].length);
-    
+    function displayLeaderBoard()external returns(player[] memory x){
+     x =new player[](s.allPlayersPerDay[s.day].length);
     for(uint i = 0; i < s.allPlayersPerDay[s.day].length; i++){
       uint score =  s.playScore[s.allPlayersPerDay[s.day][i]][s.day];
       address player_ = s.allPlayersPerDay[s.day][i];
       x[i]= player(player_, score);
     }
-      return x;
+    emit leaderBoard(x);
+    return x;
+
     }
 }
