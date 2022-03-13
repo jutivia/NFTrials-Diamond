@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
-
 import {AppStorage} from "../libraries/LibAppStorage.sol";
 import {LibGame} from "../libraries/LibAppGameFunctions.sol";
 contract GameArena {
@@ -29,8 +28,8 @@ contract GameArena {
     }
 
     function init() external {
-      s.startTimeStamp = block.timestamp;
-      // s.startTimeStamp = 1647212400;
+      // s.startTimeStamp = block.timestamp;
+      s.startTimeStamp = 	1647126000;
       s.day = 1;
     }
 
@@ -92,9 +91,15 @@ contract GameArena {
       s.allPlayersPerDay[s.day].push(msg.sender);
       emit EmitScores(score);
     }
+    function displayLeaderBoard()external returns(player[] memory x){
+     x =new player[](s.allPlayersPerDay[s.day].length);
+    for(uint i = 0; i < s.allPlayersPerDay[s.day].length; i++){
+      uint score =  s.playScore[s.allPlayersPerDay[s.day][i]][s.day];
+      address player_ = s.allPlayersPerDay[s.day][i];
+      x[i]= player(player_, score);
+    }
+    emit leaderBoard(x);
+    return x;
 
-    function emitLeaderBoard () {
-
-      emit leaderBoard();
     }
 }

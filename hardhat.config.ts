@@ -29,6 +29,10 @@ module.exports = {
       url: process.env.POLYGON_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+        blockGasLimit: 200000000000,
+        gas: 2100000,
+        gasPrice: 8000000000,
+        timeout: 8000000,
     },
     localhost: {
       timeout: 8000000,
