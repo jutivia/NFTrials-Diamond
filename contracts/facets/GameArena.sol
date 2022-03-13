@@ -47,7 +47,7 @@ contract GameArena {
     }
     function shuffleCards() onePlayer public {
       clearArray();
-      while (s.cards.length < 18){
+      while (s.cards.length <6){
           uint _rand = getRandomNumber();
           bool matches = false;
           for(uint i = 0; i < s.cards.length; i++){
@@ -91,15 +91,18 @@ contract GameArena {
       s.allPlayersPerDay[s.day].push(msg.sender);
       emit EmitScores(score);
     }
-    function displayLeaderBoard()external returns(player[] memory x){
-     x =new player[](s.allPlayersPerDay[s.day].length);
-    for(uint i = 0; i < s.allPlayersPerDay[s.day].length; i++){
-      uint score =  s.playScore[s.allPlayersPerDay[s.day][i]][s.day];
-      address player_ = s.allPlayersPerDay[s.day][i];
-      x[i]= player(player_, score);
-    }
-    emit leaderBoard(x);
-    return x;
-
+    function displayLeaderBoard(address _player, uint _score) onePlayer external returns(player[] memory x){
+     s.allPlayersPerDay[s.day].push(_player);
+     s.playScore[_player][s.day] = _score;
+     x = new player[](s.allPlayersPerDay[s.day].length);
+     for(uint i=0; i<s.allPlayersPerDay[s.day].length; i++){
+         address currentPlayer = s.allPlayersPerDay[s.day][i];
+         uint currentScore = s.playScore[currentPlayer][s.day];
+        x[i] = player({
+         playerAddress: currentPlayer, 
+         score: currentScore
+       });
+     }
+     emit leaderBoard(x);
     }
 }
