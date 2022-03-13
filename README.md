@@ -1,6 +1,14 @@
 # NFTrials
 ## A decentralized application built on the polygon blockchain using the Diamond-3-Hardhat Implementation Standard (ERC2535) and Typechain support
 
+## NFTrials is a free to play game that allows players to earn NFTs. Each player has equal chance of winning. NFTrials also seeks to acquaint players with the concept of NFTs while promoting African culture by integrating art created by Africans. 
+
+## Players get access to the game by first connecting their wallet. After successfully connecting, they proceed to a page where they get a trial per day to correctly guess the right combination that reveal an NFT. The combination of each NFT of the day is divided into six (6) components. These components are randomly distributed into eighteen (18) different tiles from which players make their guesses. 
+
+## Players that successfully guess all six components get rewarded with an NFT. Similarly, players with the highest number of correct guesses are featured in the leaderboard.
+
+[Play NFTrials](https://nftrials.xyz)
+
 ### Diamond-3-Hardhat Implementation + Typechain Support
 
 This is a simple example implementation for [EIP-2535 Diamond Standard](https://github.com/ethereum/EIPs/issues/2535). To learn about other implementations go here: https://github.com/mudgen/diamond
